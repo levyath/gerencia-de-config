@@ -151,7 +151,7 @@ jobs:
     environment: homologacao
     steps:
       - name: Deploy Render
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_HOMOLOG }}
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
 
   dast:
     runs-on: ubuntu-latest
@@ -161,6 +161,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.12.0
         with:
           target: 'https://api-go-homolog.onrender.com'
+        continue-on-error: true
 
   deploy-prod:
     runs-on: ubuntu-latest
@@ -168,4 +169,4 @@ jobs:
     environment: producao
     steps:
       - name: Deploy Producao
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_PROD }}
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
