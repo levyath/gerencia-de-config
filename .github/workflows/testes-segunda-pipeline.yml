@@ -56,13 +56,22 @@ jobs:
     needs: e2e-tests
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
       - name: Verificar Quality Gate
         uses: SonarSource/sonarcloud-github-action@v2
         with:
+          projectBaseDir: segunda-pipeline
           args: >
-            -Dsonar.projectKey=profdiegocbcastro_gerencia-de-config
-            -Dsonar.organization=profdiegocbcastro
+            -Dsonar.projectKey=levyath_gerencia-de-config
+            -Dsonar.organization=levyath
             -Dsonar.qualitygate.wait=true
+            -Dsonar.sources=src
+            -Dsonar.tests=tests
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
